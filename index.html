@@ -52,13 +52,13 @@
     </div>
 
     <div class="crystal-buttons">
-        <button type="button" class="btn btn-1"><img class="crystal" src="assets/images/crystal1.png"
+        <button type="button" class="btn btn-1"><img class="crystal-1" src="assets/images/crystal1.png"
                 value="data-value"></button>
-        <button type="button" class="btn btn-2"><img class="crystal" src="assets/images/crystal2.png"
+        <button type="button" class="btn btn-2"><img class="crystal-2" src="assets/images/crystal2.png"
                 value="data-value"></button>
-        <button type="button" class="btn btn-3"><img class="crystal" src="assets/images/crystal3.jpg"
+        <button type="button" class="btn btn-3"><img class="crystal-3" src="assets/images/crystal3.jpg"
                 value="data-value"></button>
-        <button type="button" class="btn btn-4"><img class="crystal" src="assets/images/crystal4.jpg"
+        <button type="button" class="btn btn-4"><img class="crystal-4" src="assets/images/crystal4.jpg"
                 value="data-value"></button>
     </div>
 
@@ -69,39 +69,49 @@
         var wins = 0;
         var losses = 0;
         var runningTotal = 0;
+        var num1 = 0;
+        var num2 = 0;
+        var num3 = 0;
+        var num4 = 0;
         var roundTargetScore = Math.floor(Math.random() * 120 + 19);
-        var randomCrystalValue = Math.floor(Math.random() * 12 + 1);
+        // var randomCrystalValue = Math.floor(Math.random() * 12 + 1);
 
         $("#wins").text(wins);
         $("#losses").text(losses);
         $("#random-number").text(roundTargetScore);
-        $(".btn btn-1").text(randomCrystalValue);
-        $(".btn btn-2").text(randomCrystalValue);
-        $(".btn btn-3").text(randomCrystalValue);
-        $(".btn btn-4").text(randomCrystalValue);
         $("#score-board").text(runningTotal);
 
         // Functions
-        function gamereset() {
-        roundTargetScore = Math.floor(Math.random() * 120 + 19);
-        randomCrystalValue = Math.floor(Math.random() * 12 + 1);
-        $("#random-number").text(roundTargetScore)
-        runningTotal = 0;
-        }
 
-        function startGame () {
+        // Start the Game
+        function startGame() {
+        var num1 = Math.floor(Math.random() * 12 + 1);
+        var num2 = Math.floor(Math.random() * 12 + 1);
+        var num3 = Math.floor(Math.random() * 12 + 1);
+        var num4 = Math.floor(Math.random() * 12 + 1);
+
+
+
             genDataValue();
             $(".crystal").on("click", function () {
-                $(this).attr("data-value");
-                console.log($(this).val());
-                // console.log ($(this).attr("value"));
-                runningTotal += $(this).attr("data-value");
-                didWeWin();
+                alert("button clicked");
             })
-        }
+            var randomCrystalValue = $(this).attr("data-value")
+            console.log("crystal value: ", randomCrystalValue);
 
+            runningTotal += parseInt(randomCrystalValue);
+            $("score-board").text(runningTotal);
+            didWeWin();
+        }
+        function gamereset() {
+            roundTargetScore = Math.floor(Math.random() * 120 + 19);
+            randomCrystalValue = Math.floor(Math.random() * 12 + 1);
+            $("#random-number").text(roundTargetScore)
+            runningTotal = 0;
+        }
         function genDataValue() {
             $(".crystal").attr("data-value", randomCrystalValue);
+            $("#random-number").text(roundTargetScore);
 
         }
         function didWeWin() {
@@ -111,11 +121,11 @@
                 $("#wins").text(wins);
                 gamereset();
             } else if (runningTotal > roundTargetScore);
-                losses++;
-                $("#losses").text(losses);
-                alert("booooooo");
-                gamereset();
-            }
+            losses++;
+            $("#losses").text(losses);
+            alert("booooooo");
+            gamereset();
+        }
 
     </script>
 </body>
