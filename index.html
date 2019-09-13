@@ -52,81 +52,102 @@
     </div>
 
     <div class="crystal-buttons">
-        <button type="button" class="btn btn-1"><img class="crystal-1" src="assets/images/crystal1.png"
+        <button type="button" class="btn btn-1"><img id="crystal1" src="assets/images/crystal1.png"
                 value="data-value"></button>
-        <button type="button" class="btn btn-2"><img class="crystal-2" src="assets/images/crystal2.png"
+        <button type="button" class="btn btn-2"><img id="crystal2" src="assets/images/crystal2.png"
                 value="data-value"></button>
-        <button type="button" class="btn btn-3"><img class="crystal-3" src="assets/images/crystal3.jpg"
+        <button type="button" class="btn btn-3"><img id="crystal3" src="assets/images/crystal3.jpg"
                 value="data-value"></button>
-        <button type="button" class="btn btn-4"><img class="crystal-4" src="assets/images/crystal4.jpg"
+        <button type="button" class="btn btn-4"><img id="crystal4" src="assets/images/crystal4.jpg"
                 value="data-value"></button>
     </div>
 
     <h2> Your Total Score: <span id="user-guesses"></span></h2>
     <h2> <span id="score-board"></span></h2>
     <script>
-        // global variables
-        var wins = 0;
-        var losses = 0;
-        var runningTotal = 0;
-        var num1 = 0;
-        var num2 = 0;
-        var num3 = 0;
-        var num4 = 0;
-        var roundTargetScore = Math.floor(Math.random() * 120 + 19);
-        // var randomCrystalValue = Math.floor(Math.random() * 12 + 1);
+        $(document).ready(function () {
+            // global variables
+            var wins = 0;
+            var losses = 0;
+            var runningTotal = 0;
+            var roundTargetScore = Math.floor((Math.random() * 120) + 19);
 
-        $("#wins").text(wins);
-        $("#losses").text(losses);
-        $("#random-number").text(roundTargetScore);
-        $("#score-board").text(runningTotal);
+            var crystal1 = Math.floor(Math.random() * 12 + 1);
+            var crystal2 = Math.floor(Math.random() * 12 + 1);
+            var crystal3 = Math.floor(Math.random() * 12 + 1);
+            var crystal4 = Math.floor(Math.random() * 12 + 1);
+            console.log("crystal 1 value is " + crystal1);
+            console.log("crystal 2 value is " + crystal2);
+            console.log("cryatal 3 value is " + crystal3);
+            console.log("cryatal 4 value is " + crystal4);
 
-        // Functions
-
-        // Start the Game
-        function startGame() {
-        var num1 = Math.floor(Math.random() * 12 + 1);
-        var num2 = Math.floor(Math.random() * 12 + 1);
-        var num3 = Math.floor(Math.random() * 12 + 1);
-        var num4 = Math.floor(Math.random() * 12 + 1);
-
-
-
-            genDataValue();
-            $(".crystal").on("click", function () {
-                alert("button clicked");
-            })
-            var randomCrystalValue = $(this).attr("data-value")
-            console.log("crystal value: ", randomCrystalValue);
-
-            runningTotal += parseInt(randomCrystalValue);
-            $("score-board").text(runningTotal);
-            didWeWin();
-        }
-        function gamereset() {
-            roundTargetScore = Math.floor(Math.random() * 120 + 19);
-            randomCrystalValue = Math.floor(Math.random() * 12 + 1);
-            $("#random-number").text(roundTargetScore)
-            runningTotal = 0;
-        }
-        function genDataValue() {
-            $(".crystal").attr("data-value", randomCrystalValue);
-            $("#random-number").text(roundTargetScore);
-
-        }
-        function didWeWin() {
-            if (runningTotal === roundTargetScore) {
-                wins++;
-                alert("Yay, You won!");
+            var updatedScore = function () {
+                $("#wins").empty();
                 $("#wins").text(wins);
-                gamereset();
-            } else if (runningTotal > roundTargetScore);
-            losses++;
-            $("#losses").text(losses);
-            alert("booooooo");
-            gamereset();
-        }
 
+                $("#losses").empty();
+                $("#losses").text(losses);
+
+                $("#score-board").empty();
+                $("#score-board").text(runningTotal);
+            }
+
+            var restartGame = function () {
+                runningTotal = 0;
+                roundTargetScore = Math.floor((Math.random() * 120) + 19);
+
+                $("#random-number").empty();
+                $("#random-number").append(roundTargetScore);
+
+                var crystal1 = Math.floor((Math.random() * 12) + 1);
+                var crystal2 = Math.floor((Math.random() * 12) + 1);
+                var crystal3 = Math.floor((Math.random() * 12) + 1);
+                var crystal4 = Math.floor((Math.random() * 12) + 1);
+
+                updatedScore();
+            }
+
+            function didWeWin() {
+                if (runningTotal == roundTargetScore) {
+                    wins++;
+                    alert("Yay, You won!");
+                    $("#wins").text(wins);
+                    restartGame();
+                } else if (runningTotal > roundTargetScore) {
+                    losses++;
+                    $("#losses").text(losses);
+                    alert("booooooo");
+                    restartGame();
+                } else {
+                    updatedScore();
+                }
+            };
+
+            $("#random-number").append(roundTargetScore);
+            $("#score-board").append(runningTotal);
+
+            $("#crystal1").on("click", function () {
+                runningTotal = runningTotal + crystal1;
+                didWeWin();
+            })
+
+            $("#crystal2").on("click", function () {
+                runningTotal = runningTotal + crystal2;
+                didWeWin();
+            })
+
+
+            $("#crystal3").on("click", function () {
+                runningTotal = runningTotal + crystal3;
+                didWeWin();
+            })
+
+            $("#crystal4").on("click", function () {
+                runningTotal = runningTotal + crystal4;
+                didWeWin();
+
+            });
+        })       
     </script>
 </body>
 
